@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from fastapi.middleware import Middleware
 from starlette.middleware.base import BaseHTTPMiddleware
-from middlewares.logging_middleware import LoggingMiddleware 
+from middlewares.logging_middleware import LoggingMiddleware
 
 # Register custom middleware for request logging
 middleware = [
@@ -17,6 +17,16 @@ app = FastAPI(middleware=middleware)
 class SubmitData(BaseModel):
     title: str
     content: str
+
+
+@app.get("/")
+def root():
+    return {"message": "FastAPI is running! BTW THIS IS HOME PAGE"}
+
+
+@app.get("/favicon.ico")
+async def favicon():
+    return ""
 
 
 @app.get("/ping")
@@ -36,7 +46,7 @@ def get_user(user_id: int):
     """
     if user_id <= 0:
         raise HTTPException(status_code=400, detail="User ID must be positive")
-    
+
     return {
         "user_id": user_id,
         "name": f"User{user_id}",

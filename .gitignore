@@ -48,3 +48,6 @@ dump/
 
 # FastAPI specific
 instance/
+
+# Pratham env file
+./api-server/.env
