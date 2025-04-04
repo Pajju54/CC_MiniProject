@@ -53,6 +53,9 @@ This project demonstrates how to:
 - Kafka running locally or remotely
 
 - `.env` file with:
+```plaintext
+KAFKA_BOOTSTRAP_SERVERS=localhost:9092  # Kafka broker address
+KAFKA_LOG_TOPIC=api-logs               # Topic for storing API logs
 
 > Don't forget to create your Kafka topic if not auto-created.
 
