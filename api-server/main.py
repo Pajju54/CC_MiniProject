@@ -72,3 +72,15 @@ def trigger_error():
     Simulates an internal server error for testing middleware logging.
     """
     raise HTTPException(status_code=500, detail="Internal server error simulation")
+
+@app.post("/dataattempt")
+def submit_data(data: SubmitData):
+    """
+    Accept and validate structured data from client.
+    Responds back with confirmation and echoed data.
+    """
+    return {
+        "message": "Data sent to be checked",
+        "data": data.dict()
+    }
+
