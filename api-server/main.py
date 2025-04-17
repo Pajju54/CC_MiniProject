@@ -84,3 +84,25 @@ def submit_data(data: SubmitData):
         "data": data.dict()
     }
 
+
+@app.get("/version")
+def get_version():
+    """
+    Returns the current version of the API.
+    """
+    return {
+        "version": "1.0.0",
+        "description": "Initial release version"
+    }
+
+
+@app.get("/status")
+def system_status():
+    """
+    Returns basic system status.
+    """
+    return {
+        "status": "running",
+        "uptime": "72 hours",
+        "load": "normal"
+    }
