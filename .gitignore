@@ -51,3 +51,6 @@ instance/
 
 # Pratham env file
 ./api-server/.env
+
+#pwds
+pwds
