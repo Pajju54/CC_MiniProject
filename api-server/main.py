@@ -2,7 +2,6 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from fastapi.middleware import Middleware
 from starlette.middleware.base import BaseHTTPMiddleware
-# from middlewares.logging_middleware import LoggingMiddleware
 
 import time
 import json
@@ -70,7 +69,7 @@ class LoggingMiddleware(BaseHTTPMiddleware):
             "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
             "method": request.method,
             "endpoint": str(request.url),
-            "path": request.url.path,
+            "path": request.url.path, 
             "status_code": status_code,
             "response_time_ms": round(process_time, 2),
             "client_ip": request.client.host if request.client else None,
@@ -100,7 +99,7 @@ app = FastAPI(middleware=middleware)
 
 # Pydantic model to validate incoming POST request payload
 class SubmitData(BaseModel):
-    title: str
+    title: Optional[str] = None
     content: str
 
 
@@ -138,18 +137,20 @@ def get_user(user_id: int):
         "email": f"user{user_id}@example.com"
     }
 
-
 @app.post("/submit")
 def submit_data(data: SubmitData):
     """
     Accept and validate structured data from client.
     Responds back with confirmation and echoed data.
+    Raises an error if 'title' is completely missing.
     """
+    if data.title is None:
+        raise HTTPException(status_code=422, detail="Title is required")
+
     return {
         "message": "Data received successfully",
         "data": data.dict()
     }
-
 
 @app.get("/error")
 def trigger_error():
@@ -157,18 +158,6 @@ def trigger_error():
     Simulates an internal server error for testing middleware logging.
     """
     raise HTTPException(status_code=500, detail="Internal server error simulation")
-
-@app.post("/dataattempt")
-def submit_data(data: SubmitData):
-    """
-    Accept and validate structured data from client.
-    Responds back with confirmation and echoed data.
-    """
-    return {
-        "message": "Data sent to be checked",
-        "data": data.dict()
-    }
-
 
 @app.get("/version")
 def get_version():
