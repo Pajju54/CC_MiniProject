@@ -1,4 +1,4 @@
-# Monitorize: Application Monitoring Dashboard
+# monitorize: Application Monitoring Dashboard
 
 Monitorize is a containerized, real-time API monitoring and logging system built with FastAPI, Kafka, PostgreSQL, and Grafana. It logs every API request, stores logs in a database, and visualizes them with Grafana dashboards. The system is orchestrated using Docker Compose for easy deployment.
 
